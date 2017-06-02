@@ -10,7 +10,8 @@ cat ../balanced_train_segments.csv | ../download.sh
 cd ../validate 
 cat ../eval_segments.csv | ../download.sh
 ```
-## Build the TFRecor
+
+## Build the TFRecord file
 
 ```bash
 cd download
