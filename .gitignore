@@ -1,5 +1,5 @@
 
 # Don't track gzip wave gzip files 
-download/validate/*.gzip
-download/train/*.gzip
+download/validate/*.gz
+download/train/*.gz
 
