@@ -10,9 +10,11 @@ import time
 WAV_RATE = 22050
 WAV_LENGHT = 220500
 N_CLASSES = 527
+dl_dir = '../download/'
 
 
-df_lbls_idx = pandas.read_csv("class_labels_indices.csv", quotechar='"')
+df_lbls_idx = pandas.read_csv(dl_dir + 'class_labels_indices.csv', 
+                              quotechar='"')
 df_lbls_idx = np.array(df_lbls_idx)
 def _get_label_names(dense_labels):
     indexes = np.argwhere(dense_labels).reshape(-1)
@@ -93,7 +95,7 @@ def inputs(tfrecords_filename, batch_size=30, num_epochs=None):
 Here begins the desired shit ;)
 """
 def main():
-    waves, labels = inputs("audioset_train.tfrecords", batch_size=3)
+    waves, labels = inputs(dl_dir + 'audioset_train.tfrecords', batch_size=3)
     init_op = tf.group(tf.global_variables_initializer(),
                        tf.local_variables_initializer())
 

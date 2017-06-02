@@ -11,29 +11,30 @@ pandas.set_option('display.max_colwidth',1000)
 # Some parameters
 WAV_RATE = 22050
 WAV_LENGHT = 220500
+dl_dir = '../download/'
 
 # Parse the arguments
 parser = argparse.ArgumentParser(description='build the tfwriter')
 parser.add_argument('dataset', nargs='*', type=str,
-                    default='train',
-                    help='data set to build (train or validate)')
+                    default=['train'],
+                    help='dataset to build (train or validate)')
 args = parser.parse_args()
 record_file_name = 'audioset_' + args.dataset[0] + '.tfrecords'
 
 # Open the desired CSVs
 # 1) Label indes and names
-df_lbls_idx = pandas.read_csv("class_labels_indices.csv", quotechar='"')
+df_lbls_idx = pandas.read_csv(dl_dir + 'class_labels_indices.csv', quotechar='"')
 
 # 2) Datsaset videos with start time, end time and labels
 if args.dataset[0] == "train":
-    df_dataset = pandas.read_csv("balanced_train_segments.csv", 
+    df_dataset = pandas.read_csv(dl_dir + 'balanced_train_segments.csv', 
                                  names=['f_id', 'start', 'end', 'lbls'],
                                  quotechar='"', 
                                  skipinitialspace=True, 
                                  skiprows=2)
 
 if args.dataset[0] == "validate":
-    df_dataset = pandas.read_csv("eval_segments.csv", 
+    df_dataset = pandas.read_csv(dl_dir + 'eval_segments.csv', 
                                  names=['f_id', 'start', 'end', 'lbls'],
                                  quotechar='"', 
                                  skipinitialspace=True, 
@@ -66,14 +67,13 @@ def _get_lbl_idx(lbl):
     return label_idx
 
 
-
 # Create a tfrecord file and list the wav's paths
 writer = tf.python_io.TFRecordWriter(record_file_name)
-wav_paths = [f for f in os.listdir(args.dataset[0] + '/') if '.wav.gz' in f]
+wav_paths = [f for f in os.listdir(dl_dir + args.dataset[0] + '/') if '.wav.gz' in f]
 
 for wav_path in tqdm(wav_paths):
     # Read the gzipped wav files
-    wav_unzip = gzip.open(args.dataset[0] + '/' + wav_path)
+    wav_unzip = gzip.open(dl_dir + args.dataset[0] + '/' + wav_path)
     wav = scipy.io.wavfile.read(wav_unzip)[1]
     if len(wav.shape) > 1:
         wav = wav.mean(axis=1)
