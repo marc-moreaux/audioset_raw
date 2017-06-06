@@ -2,7 +2,7 @@
 
 Download and create a tfreader for the audioset dataset
 
-## 1) Download dataset (takes few hours)
+## Download dataset (takes few hours)
 
 ```bash
 cd download/train
@@ -11,7 +11,9 @@ cd ../validate
 cat ../eval_segments.csv | ../download.sh
 ```
 
-## 2-a) Build the TFRecord file
+## Access the data (either through TFRecord or a Generator)
+
+* ### Build the TFRecord file
 
 ```bash
 cd download
@@ -19,7 +21,7 @@ python audioset_writer.py train
 python audioset_writer.py validate
 ```
 
-## 2-b) Access WAV through a simple generator
+* ### Access WAV through a simple generator
 ``` python
 from audioset_generator import get_batchs
 
