@@ -26,6 +26,6 @@ python audioset_writer.py validate
 from audioset_generator import get_batchs
 
 # get_batchs is a generator
-my_gen = get_batchs(batch_size=10, n_epochs=1 num_threads=4)
+my_gen = get_batchs(batch_size=10, n_epochs=1, num_threads=4)
 my_gen.next()
 ```
